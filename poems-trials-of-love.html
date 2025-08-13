@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDS: Front-End 24-25 Poems</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&
+    display=swap"
+    rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" 
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-row">
+                <div class="logo">⋆ ˖ ⁺ ‧ ₊ ♡ The Love Archive ♡ ₊ ‧ ⁺ ˖ ⋆ </div>
+            </div>
+    
+            <div class="nav-row">
+                <ul class="nav-list">
+                    <li><a class="btn" href="index.html">☆About the Site☆</a></li>
+                    <li><a class="btn" href="quotes.html">☆Quotes☆</a></li>
+                    <li><a class="btn" href="poems.html" aria-current="page">☆Poems☆</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="categories">
+        <div class="container-categories">
+            <ul class="cat-list">
+                <li><a class="cat-btn" href="poems-gentle-embrace.html">Gentle Embrace</a></li>
+                <li><a class="cat-btn" href="poems-flames-of-passion.html">Flames of Passion</a></li>
+                <li><a class="cat-btn" href="poems-echoes-unreturned.html">Echoes Unreturned</a></li>
+                <li><a class="cat-btn" href="poems-trials-of-love.html" aria-current="true">Trials of Love</a></li>
+                <li><a class="cat-btn" href="poems-remnants-of-us.html">Remnants of Us</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container" data-type="poems" data-category="Trials of Love">
+        <header class="page-header">
+            <h1 class="page-title" data-deco-left="°♡." data-deco-right=".♡°">Poems - Trials of Love</h1>
+            <div class="page-divider" aria-hidden="true"><span class="line"></span></div>
+            <p class="page-cat-desc" data-deco-left="⋆ ˖ ⁺" data-deco-right="⁺ ˖ ⋆">
+                Poems about difficult love
+            </p>
+        </header>
+        <div id="catGrid" class="grid"></div>
+    </main>
+
+    <script src="data/quotes.js"></script>
+    <script src="data/poems.js"></script>
+    <script src="js/category-render.js"></script>
+</body>
+</html>

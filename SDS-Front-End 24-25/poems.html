@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDS: Front-End 24-25 Poems</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap"rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" 
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-row">
+                <div class="logo">⋆ ˖ ⁺ ‧ ₊ ♡ The Love Archive ♡ ₊ ‧ ⁺ ˖ ⋆ </div>
+            </div>
+    
+            <div class="nav-row">
+                <ul class="nav-list">
+                    <li><a class="btn" href="index.html">☆About the Site☆</a></li>
+                    <li><a class="btn" href="quotes.html">☆Quotes☆</a></li>
+                    <li><a class="btn" href="poems.html" aria-current="page">☆Poems☆</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="categories">
+        <div class="container-categories">
+            <ul class="cat-list">
+                <li><a class="cat-btn" href="poems-gentle-embrace.html">Gentle Embrace</a></li>
+                <li><a class="cat-btn" href="poems-flames-of-passion.html">Flames of Passion</a></li>
+                <li><a class="cat-btn" href="poems-echoes-unreturned.html">Echoes Unreturned</a></li>
+                <li><a class="cat-btn" href="poems-trials-of-love.html">Trials of Love</a></li>
+                <li><a class="cat-btn" href="poems-remnants-of-us.html">Remnants of Us</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title" data-deco-left="°♡." data-deco-right=".♡°">Poems</h1>
+            <div class="page-divider" aria-hidden="true"><span class="line"></span></div>
+            <p class="page-desc" data-deco-left="⋆ ˖ ⁺" data-deco-right="⁺ ˖ ⋆">
+                Quick poems showcase. Choose a category to see more!
+            </p>
+        </header>
+
+        <div id="poemsGrid" class="grid"></div>
+    </main>
+
+    <script src="data/poems.js"></script>
+
+    <script>
+        function slugifyCategory(name) {
+            return String(name || '')
+                .toLowerCase()
+                .replace(/&/g, 'and')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function pickRandom(items, n) {
+            const arr = items.slice();
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr.slice(0, Math.min(n, arr.length));
+        }
+
+
+        (function renderShowcaseQuotes() {
+            const grid = document.getElementById('poemsGrid');
+            if (!grid) return;
+
+            const data = Array.isArray(window.POEMS_DATA) ? window.POEMS_DATA : [];
+            if (!data.length) {
+                const empty = document.createElement('div');
+                empty.className = 'tile empty';
+                empty.textContent = 'No poems added yet.';
+                grid.appendChild(empty);
+                return;
+            }
+
+            const selection = pickRandom(data, 6);
+            selection.forEach(p => {
+                const card = document.createElement('figure');
+                card.className = 'tile';
+
+                const badge = document.createElement('a');
+                const cat = p.category || 'Gentle Embrace';
+                badge.className = 'badge';
+                badge.textContent = cat;
+                badge.href = `poems-${slugifyCategory(cat)}.html`;
+                badge.setAttribute('aria-label', `View ${cat} poems`); 
+
+                if (p.title) {
+                    const title = document.createElement('figcaption');
+                    title.className = 'ptitle';
+                    title.textContent = p.title;
+                    card.appendChild(title);
+                }
+
+                const text = document.createElement('div');
+                text.className = 'ptext';
+                const poemText = typeof p.text === 'string' ? p.text : Array.isArray(p.lines) ? p.lines.join('\n') : '';
+                text.textContent = poemText;
+
+                card.appendChild(badge);
+                card.appendChild(text);
+                if (p.author) {
+                    const by = document.createElement('figcaption');
+                    by.className = 'byline';
+                    by.textContent = '— ' + p.author;
+                    card.appendChild(by);
+                }
+                grid.appendChild(card);
+            });
+        })();
+    </script>
+
+
+
+</body>
+</html>

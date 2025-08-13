@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDS: Front-End 24-25 Quotes</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap"rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" 
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-row">
+                <div class="logo">⋆ ˖ ⁺ ‧ ₊ ♡ The Love Archive ♡ ₊ ‧ ⁺ ˖ ⋆ </div>
+            </div>
+    
+            <div class="nav-row">
+                <ul class="nav-list">
+                    <li><a class="btn" href="index.html">☆About the Site☆</a></li>
+                    <li><a class="btn" href="quotes.html" aria-current="page">☆Quotes☆</a></li>
+                    <li><a class="btn" href="poems.html">☆Poems☆</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="categories">
+        <div class="container-categories">
+            <ul class="cat-list">
+                <li><a class="cat-btn" href="quotes-gentle-embrace.html">Gentle Embrace</a></li>
+                <li><a class="cat-btn" href="quotes-flames-of-passion.html">Flames of Passion</a></li>
+                <li><a class="cat-btn" href="quotes-echoes-unreturned.html">Echoes Unreturned</a></li>
+                <li><a class="cat-btn" href="quotes-trials-of-love.html">Trials of Love</a></li>
+                <li><a class="cat-btn" href="quotes-remnants-of-us.html">Remnants of Us</a></li>
+            </ul>
+        </div>
+    </section>
+
+     <main class="container">
+        <header class="page-header">
+            <h1 class="page-title" data-deco-left="°♡." data-deco-right=".♡°">Quotes</h1>
+            <div class="page-divider" aria-hidden="true"><span class="line"></span></div>
+            <p class="page-desc" data-deco-left="⋆ ˖ ⁺" data-deco-right="⁺ ˖ ⋆">
+                Quick quotes showcase. Choose a category to see more!
+            </p>
+        </header>
+
+        <div id="quotesGrid" class="grid"></div>
+    </main>
+
+    <script src="data/quotes.js"></script>
+
+    <script>
+        function slugifyCategory(name) {
+            return String(name || '')
+                .toLowerCase()
+                .replace(/&/g, 'and')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function pickRandom(items, n) {
+            const arr = items.slice();
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr.slice(0, Math.min(n, arr.length));
+        }
+
+
+
+        (function renderShowcaseQuotes() {
+            const grid = document.getElementById('quotesGrid');
+            if (!grid) return;
+
+            const data = Array.isArray(window.QUOTES_DATA) ? window.QUOTES_DATA : [];
+            if (!data.length) {
+                const empty = document.createElement('div');
+                empty.className = 'tile empty';
+                empty.textContent = 'No quotes added yet.';
+                grid.appendChild(empty);
+                return;
+            }
+
+            const selection = pickRandom(data, 12);
+            selection.forEach(q => {
+                const card = document.createElement('figure');
+                card.className = 'tile';
+
+                const badge = document.createElement('a');
+                const cat = q.category || 'Gentle Embrace';
+                badge.className = 'badge';
+                badge.textContent = cat;
+                badge.href = `quotes-${slugifyCategory(cat)}.html`;
+                badge.setAttribute('aria-label', `View ${cat} quotes`); 
+
+                const text = document.createElement('blockquote');
+                text.className = 'qtext';
+                text.textContent = q.text || '';
+
+                card.appendChild(badge);
+                card.appendChild(text);
+                if (q.author) {
+                    const by = document.createElement('figcaption');
+                    by.className = 'byline';
+                    by.textContent = '— ' + q.author;
+                    card.appendChild(by);
+                }
+                grid.appendChild(card);
+            });
+        })();
+
+    </script>
+
+
+
+</body>
+</html>
